@@ -584,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements AMap.OnCameraChan
 //                        new Thread(new SendRedCollectinThread()).start();
                         Gson gson = new Gson();
                         String sendData = gson.toJson(redDatas);
-                        RequestParams params = new RequestParams("http://39.108.151.208:9030/sharebike/evn_data/open_redpackage_data/");
+                        RequestParams params = new RequestParams("http://112.74.60.174:9030/sharebike/evn_data/open_redpackage_data/");
                         params.addHeader("Content-type", "application/json");
                         params.setCharset("UTF-8");
                         params.setAsJsonContent(true);
@@ -1130,7 +1130,7 @@ public class MainActivity extends AppCompatActivity implements AMap.OnCameraChan
 
         @Override
         public void run() {
-            RequestParams params = new RequestParams("http://39.108.151.208:9030/sharebike/evn_data/get_redpackage_data/");
+            RequestParams params = new RequestParams("http://112.74.60.174:9030/sharebike/evn_data/get_redpackage_data/");
             params.addHeader("Content-type", "application/json");
             params.setCharset("UTF-8");
 
@@ -1323,7 +1323,7 @@ public class MainActivity extends AppCompatActivity implements AMap.OnCameraChan
             Log.i("server", "run");
             Gson gson = new Gson();
             String sendData = gson.toJson(envDatas);
-            RequestParams params = new RequestParams("http://39.108.151.208:9030/sharebike/evn_data/single/");
+            RequestParams params = new RequestParams("http://112.74.60.174:9030/sharebike/evn_data/single/");
             params.addHeader("Content-type", "application/json");
             params.setCharset("UTF-8");
             params.setAsJsonContent(true);
