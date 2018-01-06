@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SBEM</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="title">SBEM</string>
+    <!--redPackage-->
+    <string name="titleRedpackage">Data is being collected\nPlease wait a moment</string>
+    <string name="collectionTime"> count down</string>
+</resources>
