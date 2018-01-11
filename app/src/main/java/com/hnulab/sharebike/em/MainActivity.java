@@ -1296,8 +1296,13 @@ public class MainActivity extends AppCompatActivity implements AMap.OnCameraChan
                  * time：2017/9/13 21:07
                  */
                 Log.i("server", "come");
+                //B组服务器
                 Thread loginThread = new Thread(new SendDataThread());
                 loginThread.start();
+
+                //A组服务器
+                Thread loginThread2 = new Thread(new SendDataThread2());
+                loginThread2.start();
 
 //                Message msg = new Message();
 //                msg.what = handler_key.UPLOADSUCCESS.ordinal();
@@ -1316,6 +1321,7 @@ public class MainActivity extends AppCompatActivity implements AMap.OnCameraChan
 
     }
 
+    //B组服务器发数据线程
     class SendDataThread implements Runnable {
 
         @Override
@@ -1364,6 +1370,76 @@ public class MainActivity extends AppCompatActivity implements AMap.OnCameraChan
             msg.what = handler_key.OUYOFPALACE.ordinal();
             msg.obj = error;
             handler.sendMessage(msg);
+
+            envDatas.clear();
+            isUpload = false;
+            Log.i("server", "CONNECT_FAIL");
+        }
+
+        @Override
+        public void onCancelled(CancelledException cex) {
+            envDatas.clear();
+            isUpload = false;
+            Log.i("server", "onCancelled");
+        }
+
+        @Override
+        public void onFinished() {
+            envDatas.clear();
+            isUpload = false;
+            Log.i("server", "onFinished");
+        }
+    };
+
+    //A组服务器发数据线程
+    class SendDataThread2 implements Runnable {
+
+        @Override
+        public void run() {
+            Log.i("server", "run");
+            Gson gson = new Gson();
+            String sendData = gson.toJson(envDatas);
+            RequestParams params = new RequestParams("http://39.108.151.208:9030/sharebike/evn_data/single/");
+            params.addHeader("Content-type", "application/json");
+            params.setCharset("UTF-8");
+            params.setAsJsonContent(true);
+            params.setBodyContent(sendData);
+
+            Log.i("server", "run_SUCCESS");
+            x.http().post(params, callback2);
+        }
+    }
+
+    private Callback.CommonCallback<String> callback2 = new Callback.CommonCallback<String>() {
+        @Override
+        public void onSuccess(String result) {
+            Log.i("server", "REGISTER_SUCCESS");
+            envDatas.clear();
+            Log.i("server", "clear");
+            isUpload = false;
+            System.out.print(1);
+
+//            Message msg = new Message();
+//            msg.what = handler_key.UPLOADSUCCESS.ordinal();
+//            handler.sendMessage(msg);
+            Log.i("server", "start");
+            //接收数据
+//            String jsonBack = result;
+//            EnvData data = new Gson().fromJson(jsonBack,EnvData.class);
+//            Log.i("data",data.toString());
+
+        }
+
+        @Override
+        public void onError(Throwable ex, boolean isOnCallback) {
+
+            String error = ex.getMessage();
+            Log.i("error",error);
+            //坐标没在湖师大在此处接收数据
+//            Message msg = new Message();
+//            msg.what = handler_key.OUYOFPALACE.ordinal();
+//            msg.obj = error;
+//            handler.sendMessage(msg);
 
             envDatas.clear();
             isUpload = false;
